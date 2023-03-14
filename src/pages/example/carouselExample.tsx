@@ -6,6 +6,7 @@ import CarouselHomeTop, {ICarouselHomeTopList} from "@/components/carousel/carou
 
 const handleDragStart = (e) => e.preventDefault();
 
+//Mock data
 const list : ICarouselTopResponseDto[]= [
     {
         imgId : "00",
