@@ -99,7 +99,10 @@ const  CarouselExample = () => {
         const temp = []
         list.map((value)=> {
             temp.push({
-                ...value,
+                imgId : value?.imgId,
+                imgUrl : value?.imgUrl,
+                mainTitle : value?.menuNameKo,
+                subTitle : value?.menuNameEn,
                 link : "/restaurant/" + value?.restId + "/main"
             })
         })
