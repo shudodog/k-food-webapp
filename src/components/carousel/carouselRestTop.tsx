@@ -1,17 +1,17 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import AliceCarousel, {Responsive} from "react-alice-carousel";
 import Link from "next/link";
 import {Img} from "@chakra-ui/image";
-
-export interface ICarouselHomeTopList {
+import 'react-alice-carousel/lib/alice-carousel.css';
+export interface ICarouselRestTopList {
     imgId : string
     imgUrl : string
     mainTitle : string
     subTitle : string
     link : string
 }
-export interface ICarouselHomeTop {
-    list : ICarouselHomeTopList[]
+export interface ICarouselRestTop {
+    list : ICarouselRestTopList[]
     paddingRight? : number
     paddingLeft? : number
     responsive? : Responsive
@@ -19,7 +19,9 @@ export interface ICarouselHomeTop {
 }
 
 const handleDragStart = (e) => e.preventDefault();
-const CarouselHomeTop = (props : ICarouselHomeTop) => {
+const CarouselRestTop = (props : ICarouselRestTop) => {
+
+    const carousel = useRef<AliceCarousel>(null);
 
     const {list, paddingRight, paddingLeft, responsive, imgBoxSize, ...rest} = props
 
@@ -53,13 +55,13 @@ const CarouselHomeTop = (props : ICarouselHomeTop) => {
                 >
                         {value?.mainTitle}
                     </span>
-                    <span
-                        style={{
-                            // marginBottom : "-20px",
-                            color : "rgb(14, 203, 129)",
-                            fontSize: 15,
-                            fontWeight: 500 }}
-                    >
+                <span
+                    style={{
+                        // marginBottom : "-20px",
+                        color : "rgb(14, 203, 129)",
+                        fontSize: 15,
+                        fontWeight: 500 }}
+                >
                             {value?.subTitle}
                     </span>
             </Link>
@@ -69,16 +71,24 @@ const CarouselHomeTop = (props : ICarouselHomeTop) => {
     return (
         <>
             <AliceCarousel mouseTracking
-                           // animationDuration={1000}
+                // animationDuration={1000}
                            disableDotsControls
                            disableButtonsControls
                            responsive={responsive ? responsive : null}
-                           // autoPlay={true}
+                // autoPlay={true}
                            items={carouselItems}
                            infinite={true}
+                           ref={carousel}
             />
+            <nav key="nav" className="b-refs-navs">
+                {carouselItems?.map((item, i) => {
+                    return <span key={i} onClick={() => carousel?.current?.slideTo(i)} />;
+                })}
+            </nav>
+            <button onClick={(e) => carousel?.current?.slidePrev(e)}>Prev</button>
+            <button onClick={(e) => carousel?.current?.slideNext(e)}>Next</button>
         </>
     );
 }
 
-export default CarouselHomeTop;
+export default CarouselRestTop;

@@ -8,14 +8,10 @@ import ImageItemBox from "@/components/imageItem/ImageItemBox";
 import {Box, Icon, Image, Text} from "@chakra-ui/react";
 import {GrLocation} from "react-icons/gr"
 import Link from "next/link";
-
-import CaptionCarousel from "@/components/carousel/captionCarousel";
-
-
-const handleDragStart = (e) => e.preventDefault();
+import CarouselRestTop from "@/components/carousel/carouselRestTop";
 
 //Mock data
-const list : ICarouselTopResponseDto[]= [
+const list = [
     {
         imgId : "00",
         imgUrl : "http://gdimg.gmarket.co.kr/1453682296/still/600?ver=1530152938",
@@ -24,7 +20,9 @@ const list : ICarouselTopResponseDto[]= [
         menuNameKo : "bibimbap",
         restAddrSum : "",
         restUrl : "",
-        restId : ""
+        restId : "",
+        menuPrice : "13000",
+        menuId : ""
     },
     {
         imgId : "01",
@@ -34,7 +32,9 @@ const list : ICarouselTopResponseDto[]= [
         menuNameKo : "tteokbokki",
         restAddrSum : "",
         restUrl : "",
-        restId : ""
+        restId : "",
+        menuPrice : "13000",
+        menuId : ""
     },
     {
         imgId : "02",
@@ -44,7 +44,9 @@ const list : ICarouselTopResponseDto[]= [
         menuNameEn : "sundae",
         restAddrSum : "",
         restUrl : "",
-        restId : ""
+        restId : "",
+        menuPrice : "13000",
+        menuId : ""
     },
     {
         imgId : "03",
@@ -54,7 +56,9 @@ const list : ICarouselTopResponseDto[]= [
         menuNameEn : "Charcoal Fired Chicken Ribs",
         restAddrSum : "",
         restUrl : "",
-        restId : ""
+        restId : "",
+        menuPrice : "13000",
+        menuId : ""
     },
     {
         imgId : "00",
@@ -64,7 +68,9 @@ const list : ICarouselTopResponseDto[]= [
         menuNameKo : "bibimbap",
         restAddrSum : "",
         restUrl : "",
-        restId : ""
+        restId : "",
+        menuPrice : "13000",
+        menuId : ""
     },
     {
         imgId : "01",
@@ -74,7 +80,9 @@ const list : ICarouselTopResponseDto[]= [
         menuNameKo : "tteokbokki",
         restAddrSum : "",
         restUrl : "",
-        restId : ""
+        restId : "",
+        menuPrice : "13000",
+        menuId : ""
     },
     {
         imgId : "02",
@@ -84,37 +92,41 @@ const list : ICarouselTopResponseDto[]= [
         menuNameEn : "sundae",
         restAddrSum : "",
         restUrl : "",
-        restId : ""
+        restId : "",
+        menuPrice : "13000",
+        menuId : ""
     },
-    {
-        imgId : "03",
-        imgUrl : "https://cafe24img.poxo.com/theoro/web/product/big/202101/c8e5e6cc7b895240529649fa336982b6.jpg",
-        menuName : "숯불닭갈비",
-        menuNameKo : "succbul-talkgalbi",
-        menuNameEn : "Charcoal Fired Chicken Ribs",
-        restAddrSum : "",
-        restUrl : "",
-        restId : ""
-    },
+    // {
+    //     imgId : "03",
+    //     imgUrl : "https://cafe24img.poxo.com/theoro/web/product/big/202101/c8e5e6cc7b895240529649fa336982b6.jpg",
+    //     menuName : "숯불닭갈비",
+    //     menuNameKo : "succbul-talkgalbi",
+    //     menuNameEn : "Charcoal Fired Chicken Ribs",
+    //     restAddrSum : "",
+    //     restUrl : "",
+    //     restId : ""
+    // },
 
 ]
 
-const  CarouselExample = () => {
+const  Rest = () => {
 
     const [carouselItems, setCarouselItems] = useState<ICarouselHomeTopList []>(null)
 
     useEffect(()=>{
+        /**
+         * 화면 첫 진입시 restaurant id로 레스토랑 정보 가져오는 api 호출
+         **/
         const temp = []
         list.map((value)=> {
             temp.push({
                 imgId : value?.imgId,
                 imgUrl : value?.imgUrl,
-                mainTitle : value?.menuNameKo,
-                subTitle : value?.menuNameEn,
-                link : "/restaurant" + value?.restId + "/main"
+                mainTitle : value?.menuNameKo + " (" + value?.menuNameEn + ")",
+                subTitle : "W " + value?.menuPrice,
+                link : "/restaurant/menu-detail/" + value?.menuId,
             })
         })
-        console.log("temp", temp)
         setCarouselItems(temp)
     },[])
 
@@ -129,17 +141,12 @@ const  CarouselExample = () => {
 
     return (
         <>
-
-            <Box>
-                {/* 요소의 내용 */}
-                <CaptionCarousel/>
+            <Box p={"50px"} w="100%" marginTop={"-50px"}>
+                <CarouselRestTop list={carouselItems} paddingLeft={20} responsive={responsive} imgBoxSize={"300px"}/>
             </Box>
-            <Box p={"100px"} w="100%">
-                <CarouselHomeTop list={carouselItems} paddingLeft={10} responsive={responsive} imgBoxSize={"250px"}/>
-            </Box>
-            <Box p={"80px"} w="100%">
+            <Box p={"80px"} w="100%" marginTop={"-100px"}>
                 <ImageItemWrapper column={4} >
-                    <ImageItemBox colSpan={{ xl: 1 }} rowSpan={2} >
+                    <ImageItemBox colSpan={{ xl: 2 }} rowSpan={2} >
                         <Box
                             w="100%"
                             h="357px"
@@ -151,7 +158,7 @@ const  CarouselExample = () => {
                             차트 영역
                         </Box>
                     </ImageItemBox>
-                    <ImageItemBox colSpan={{ xl: 1 }} rowSpan={2}>
+                    <ImageItemBox colSpan={{ xl: 2 }} rowSpan={2}>
                         <Link
                             style={{
                                 display: "flex",
@@ -182,7 +189,7 @@ const  CarouselExample = () => {
                             </Text>
                         </Link>
                     </ImageItemBox>
-                    <ImageItemBox colSpan={{ xl: 1 }} rowSpan={2}>
+                    <ImageItemBox colSpan={{ xl: 2 }} rowSpan={2}>
                         <Image
                             src="https://sitem.ssgcdn.com/37/29/15/item/1000021152937_i1_1100.jpg"
                             w="100%"
@@ -199,7 +206,7 @@ const  CarouselExample = () => {
                             <Icon as={GrLocation}/>
                         </Text>
                     </ImageItemBox>
-                    <ImageItemBox colSpan={{ xl: 1 }} rowSpan={2}>
+                    <ImageItemBox colSpan={{ xl: 2 }} rowSpan={2}>
                         <Image
                             src="https://sitem.ssgcdn.com/37/29/15/item/1000021152937_i1_1100.jpg"
                             w="100%"
@@ -222,4 +229,4 @@ const  CarouselExample = () => {
     )
 }
 
-export default CarouselExample;
+export default Rest;
